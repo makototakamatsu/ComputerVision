@@ -111,3 +111,49 @@ class Node(object):
             likelihood[1]=np.exp(-self.alpha*0.0)
 
         self.message[self]=likelihood
+
+    #<マルコフ確率場を構築するための関数>
+    #各画素ごとにノードを作成し、隣接画素ノードとの接続を作成
+    def generateBeliefNetwork(image):
+        network=MRF()
+        height,width=image.reshape
+
+        for i in range(height):
+            for j in range(width):
+                nodeID=width*i+jnode=Node(nodeID)
+                network.addNode(nodeID,node)
+
+        dy=[-1,0,0,1]
+        dx=[0,-1,1,0]
+
+        for i in range(height):
+            for j in range(width):
+                node=network.getNode(width*i+j)
+
+                for k in range(4):
+                    if i+dy[k] >=0 and i+dy[k]<height and j+dx[k]>=0 and j+dx[k]<width:
+                        neighbor=network.getNode(width*(i+dy[k])+j+dx[k])
+                        node.addNeighbor(neighbor)
+    return network
+
+    def main():
+        #使用データ
+        image=cv2.imread("",0)
+        binary=image>threshold_otsu(image).astype(np.int)
+        noise=addNoise(binary)
+
+
+        #MRFを構築
+        network=generateBeliefNetwork(image)
+
+        #観測値(画素値)から尤度を作成
+        for i in range(image.shape[0]):
+            for j in range(image.shape[1]):
+                node=network.getNode(output.shape[1]*i+j)
+                prob=node.prob
+                if prob[1]>prob[0]:
+                    output[i,j]=1
+
+        #結果表示
+        plt.gray()
+        plt.subplot(121)
