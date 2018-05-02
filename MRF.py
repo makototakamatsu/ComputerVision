@@ -50,7 +50,7 @@ class MRF:
         #Calculate the marginal distribution for each node
         for node in self.nodes:
             node.marginal()
-
+##<ノードクラス>
 class Node(object):
     def __init__(self,id):
         self.id=id
@@ -85,3 +85,29 @@ class Node(object):
         self.prob=prob
 
     #隣接ノードの状態を考慮した尤度を計算
+    def sendMessage(self.target):
+        neigbor_message=1.0
+        for neighbor in self.message.keys():
+            if neighbor != target:
+                neighbor_message *= self.message[neighbor]
+
+        compatibility_0 = np.array([np.exp(-self.beta*np.abs(0.0-0.0)),np.exp(-self.beta*np.abs(0.0-1.0))])
+        compatibility_1 = np.array([np.exp(-self.beta*np.abs(1.0-0.0)),np.exp(-self.beta*np.abs(1.0-1.0))])
+
+        message = np.array([np.sum(neighbor_message*compatibility_0),np.sum(neighbor_message*compatibility_1)])
+        message /=np.sum(message)
+
+        return message
+
+    #観測値から計算する尤度
+    def calcLikelihood(self,value):
+        likelihood = np.array([0.0,0.0])
+
+        if value==0:
+            likelihood[0]=np.exp(-self.alpha*0.0)
+            likelihood[1]=np.exp(-self.slpha*1.0)
+        else:
+            likelihood[0]=np.exp(-self.alpha*1.0)
+            likelihood[1]=np.exp(-self.alpha*0.0)
+
+        self.message[self]=likelihood
