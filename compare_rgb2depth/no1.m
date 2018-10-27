@@ -1,15 +1,16 @@
 clear all;
-%右側に写真が配置される
+%右側に写真が配置される(深度画像)
 file_name = uigetfile('*');
 IMG = imread(file_name);
 IMG = imresize(IMG,[256 256]);
 IMG(:,:,1) = imadjust(IMG(:,:,1));
 IMG(:,:,2) = imadjust(IMG(:,:,1));
 IMG(:,:,3) = imadjust(IMG(:,:,1));
+IMG = histeq(IMG);
 imagesc(IMG); colorbar; axis image;
 
 IMG0 = IMG;
-%左側に写真が配置される
+%左側に写真が配置される(RGB画像)
 file_name = uigetfile('*');
 IMG = imread(file_name);
 IMG = imresize(IMG,[256 256]);
