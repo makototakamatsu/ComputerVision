@@ -16,7 +16,7 @@ IMG(:,:,1) = imadjust(IMG(:,:,1));
 IMG(:,:,2) = imadjust(IMG(:,:,1));
 IMG(:,:,3) = imadjust(IMG(:,:,1));
 %ƒqƒXƒgƒOƒ‰ƒ€
-%IMG = histeq(IMG);
+IMG = histeq(IMG);
 imagesc(IMG); colorbar; axis image;
 
 IMG0 = IMG;
